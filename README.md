@@ -44,6 +44,7 @@ a look at the todo list below for anything that needs to be done. **Any contribu
 ## Todo
 
 - Add an implementation with `synchronize` for other bots.
+- Add algorithm details for each quarter.
 - Improve algorithm.
 
 

@@ -5,13 +5,15 @@ DreamersBoardMT = { __index = DreamersBoard }
  * Creates a new DreamersBoard object.
  *
  * @param     {table}            board    A 6x6 table representing the board tiles
+ * @param     {function}         board    A function to be called before each step; receives a step
+ *                                        object and the board instance as parameters
  *
  * @return    {DreamersBoard}             A DreamersBoard object
 ]]
-function DreamersBoard:new(board)
+function DreamersBoard:new(board, stepCallback)
 	local newObject = {
 		board = board,
-        steps = {}
+        stepCallback = stepCallback
 	}
 	setmetatable(newObject, DreamersBoardMT)
 
@@ -28,22 +30,6 @@ end
 ]]
 function DreamersBoard:getTile(i, j)
     return self.board[i][j]
-end
-
---[[
- * Gets the steps taken on the board.
- *
- * @return    {table}    The steps taken on the board
-]]
-function DreamersBoard:getSteps()
-    return self.steps
-end
-
---[[
- * Clears the steps taken on the board.
-]]
-function DreamersBoard:clearSteps()
-    self.steps = {}
 end
 
 --[[
@@ -89,10 +75,10 @@ end
  * @param    {number}    col    The column to shift the board on
 ]]
 function DreamersBoard:shiftVertically(col)
-     table.insert(self.steps, {
+    self.stepCallback({
         dir = 'v',
         n   = col
-    })
+    }, self)
 
 	local tempTile = self.board[6][col]
 
@@ -123,12 +109,12 @@ end
  * @param    {number}    row    The row to shift the board on
 ]]
 function DreamersBoard:shiftHorizontally(row)
-    table.insert(self.steps, {
+    self.stepCallback({
         dir = 'h',
         n   = row
-    })
+    }, self)
 
-	local tempTile = self.board[row][6]
+    local tempTile = self.board[row][6]
 
 	for j = 6, 2, -1 do
 		self.board[row][j] = self.board[row][j - 1]

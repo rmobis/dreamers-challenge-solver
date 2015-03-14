@@ -3,9 +3,9 @@ WindBotDreamersBoard = {
     __super = DreamersBoard,
 
     -- Constants
-    BOARD_POSX = 12345,
-    BOARD_POSY = 12345,
-    BOARD_POSZ = 12345,
+    BOARD_POSX = 32818,
+    BOARD_POSY = 32334,
+    BOARD_POSZ = 9,
 }
 
 WindBotDreamersBoardMT = table.merge(
@@ -16,6 +16,21 @@ WindBotDreamersBoardMT = table.merge(
 setmetatable(WindBotDreamersBoard, DreamersBoardMT)
 
 --[[
+ * Creates a new WindBotDreamersBoard object.
+ *
+ * @param     {any}                     ...    Same as DreamersBoard
+ *
+ * @return    {WindBotDreamersBoard}           A WindBotDreamersBoard object
+]]
+function WindBotDreamersBoard:new(...)
+    local newObject = self.__super:new(...)
+
+    setmetatable(newObject, WindBotDreamersBoardMT)
+
+    return newObject
+end
+
+--[[
  * Synchronizes the internal representation of the board with the real one on the Tibia world.
  *
  * @return    {bool}    Whether the synchronization was successful
@@ -23,15 +38,16 @@ setmetatable(WindBotDreamersBoard, DreamersBoardMT)
 function WindBotDreamersBoard:synchronize()
     local board = {}
 
-    for y = self.BOARD_POSY, self.BOARD_POSY + 5 do
-        self.board[y] = {}
+    for i = 1, 6 do
+        board[i] = {}
 
-        for x = self.BOARD_POSX, self.BOARD_POSX + 5 do
+        for j = 1, 6 do
+            local x, y = self.BOARD_POSX + j - 1, self.BOARD_POSY + i - 1
             if not tilehasinfo(x, y, self.BOARD_POSZ) then
                 return false
             end
 
-            board[y][x] = topitem(x, y, self.BOARD_POSZ).id
+            board[i][j] = topitem(x, y, self.BOARD_POSZ).id - 2393
         end
     end
 

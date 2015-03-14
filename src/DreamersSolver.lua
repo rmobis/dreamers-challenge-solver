@@ -164,7 +164,7 @@ function DreamersSolver:solveSecondQuarter()
 		self:dropAll(tile, 1, 3)
 		self:fillFloor(tile, 1, 3, 3)
 
-		for j = 0, 3 do
+		for j = 1, 3 do
 			for i = 5, 4, -1 do
 				if self.board:getTile(i, j) ~= tile then
 					local found = false

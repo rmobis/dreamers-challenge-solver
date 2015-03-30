@@ -11,13 +11,13 @@ DreamersBoardMT = { __index = DreamersBoard }
  * @return    {DreamersBoard}             A DreamersBoard object
 ]]
 function DreamersBoard:new(board, stepCallback)
-	local newObject = {
-		board = board,
+    local newObject = {
+        board = board,
         stepCallback = stepCallback
-	}
-	setmetatable(newObject, DreamersBoardMT)
+    }
+    setmetatable(newObject, DreamersBoardMT)
 
-	return newObject
+    return newObject
 end
 
 --[[
@@ -38,7 +38,7 @@ end
  * @param    {table}    board    A 6x6 table representing the board tiles
 ]]
 function DreamersBoard:updateBoard(board)
-	self.board = board
+    self.board = board
 end
 
 --[[
@@ -51,7 +51,7 @@ end
  *                                  `dest`.
 ]]
 function DreamersBoard:calculateDistance(origin, dest)
-	return ((dest - origin) + 6) % 6
+    return ((dest - origin) + 6) % 6
 end
 
 --[[
@@ -66,7 +66,7 @@ end
  *                              (`di`, `dj`).
 ]]
 function DreamersBoard:calculateFullDistance(oi, oj, di, dj)
-	return self:calculateDistance(oi, di) + self:calculateDistance(oj, dj)
+    return self:calculateDistance(oi, di) + self:calculateDistance(oj, dj)
 end
 
 --[[
@@ -80,13 +80,13 @@ function DreamersBoard:shiftVertically(col)
         n   = col
     }, self)
 
-	local tempTile = self.board[6][col]
+    local tempTile = self.board[6][col]
 
-	for i = 6, 2, -1 do
-		self.board[i][col] = self.board[i - 1][col]
-	end
+    for i = 6, 2, -1 do
+        self.board[i][col] = self.board[i - 1][col]
+    end
 
-	self.board[1][col] = tempTile
+    self.board[1][col] = tempTile
 end
 
 --[[
@@ -98,9 +98,9 @@ end
 function DreamersBoard:shiftVerticallyN(col, times)
     times = times % 6
 
-	for i = 1, times do
-		self:shiftVertically(col)
-	end
+    for i = 1, times do
+        self:shiftVertically(col)
+    end
 end
 
 --[[
@@ -116,11 +116,11 @@ function DreamersBoard:shiftHorizontally(row)
 
     local tempTile = self.board[row][6]
 
-	for j = 6, 2, -1 do
-		self.board[row][j] = self.board[row][j - 1]
-	end
+    for j = 6, 2, -1 do
+        self.board[row][j] = self.board[row][j - 1]
+    end
 
-	self.board[row][1] = tempTile
+    self.board[row][1] = tempTile
 end
 
 --[[
@@ -132,9 +132,9 @@ end
 function DreamersBoard:shiftHorizontallyN(row, times)
     times = times % 6
 
-	for i = 1, times do
-		self:shiftHorizontally(row)
-	end
+    for i = 1, times do
+        self:shiftHorizontally(row)
+    end
 end
 
 --[[

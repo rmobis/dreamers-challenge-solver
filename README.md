@@ -14,6 +14,10 @@ Here's a little example that uses the `DreamersSolver` class to solve a `Dramers
 table and then prints the amount of steps taken to solve it:
 
 ````lua
+function callback(step)
+    print(sept.dir, step.n)
+end
+
 local b = DreamersBoard:new({
     {1, 2, 3, 4, 1, 2},
     {3, 4, 1, 2, 3, 4},
@@ -21,7 +25,7 @@ local b = DreamersBoard:new({
     {3, 4, 1, 2, 3, 4},
     {1, 2, 3, 4, 1, 2},
     {3, 4, 1, 2, 3, 4}
-})
+}, callback)
 
 local s = DreamersSolver:new(b, {
     {1, 2},
@@ -31,7 +35,7 @@ local s = DreamersSolver:new(b, {
 s:solveBoard()
 
 if s:checkBoard() then
-    print(#b:getSteps())
+    print('Board solved!')
 end
 ````
 
